@@ -21,4 +21,69 @@ subjects:
   - kind: Group
     name: roboshop-trainee
     apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: roboshop-admin
+  namespace: roboshop
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: roboshop-admin
+  namespace: roboshop
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: roboshop-namespace-admin
+subjects:
+  - kind: Group
+    name: roboshop-admin
+    apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: roboshop-cluster-viewer
+rules:
+  - apiGroups: [""]
+    resources: ["nodes", "namespaces", "persistentvolumes", "persistentvolumeclaims"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["nodes", "pods"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: roboshop-cluster-viewer
+rules:
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: roboshop-cluster-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: roboshop-cluster-viewer
+subjects:
+  - kind: Group
+    name: roboshop-admin          # same group as namespace admin
+    apiGroup: rbac.authorization.k8s.io
+
 
