@@ -40,7 +40,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: roboshop-namespace-admin
+  name: roboshop-admin
 subjects:
   - kind: Group
     name: roboshop-admin
