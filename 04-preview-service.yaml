@@ -5,12 +5,12 @@ metadata:
   labels:
     purpose: blue-green
     project: roboshop
-    target: main
+    target: preview
 spec:
   selector:
     purpose: blue-green
     project: roboshop
-    color: blue
+    color: green
   ports:
     - protocol: TCP
       port: 80 # service port
