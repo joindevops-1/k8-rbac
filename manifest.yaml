@@ -42,7 +42,7 @@ spec:
         - sh
         - -c
         - |
-            aws secretsmanager get-secret-value --secret-id roboshop/dev/mysql_password --query SecretString --output text | jq -r .mysql-password > /tmp/mysql_root_password.txt
+            aws secretsmanager get-secret-value --secret-id roboshop/dev/mysql_password --query SecretString --output text | jq -r '.["mysql-password"]' > /tmp/mysql_root_password.txt
         volumeMounts:
         - mountPath: /tmp
           name: mysql-secret
